@@ -14,15 +14,15 @@ const initialJobs = [
 
 // Header Component
 const Header = () => (
-  <header className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 shadow-lg rounded-b-lg">
+  <header className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white p-4 shadow-2xl rounded-b-xl">
     <div className="container mx-auto flex justify-between items-center">
-      <h1 className="text-3xl font-extrabold tracking-tight">SchedX</h1>
+      <h1 className="text-3xl font-extrabold tracking-tight text-shadow-lg">SchedX</h1>
       <nav>
         <ul className="flex space-x-6">
-          <li><a href="#" className="hover:text-blue-200 transition duration-300">Dashboard</a></li>
-          <li><a href="#" className="hover:text-blue-200 transition duration-300">Jobs</a></li>
-          <li><a href="#" className="hover:text-blue-200 transition duration-300">Logs</a></li>
-          <li><a href="#" className="hover:text-blue-200 transition duration-300">Settings</a></li>
+          <li><a href="#" className="text-blue-100 hover:text-white transition duration-300 ease-in-out transform hover:scale-105">Dashboard</a></li>
+          <li><a href="#" className="text-blue-100 hover:text-white transition duration-300 ease-in-out transform hover:scale-105">Jobs</a></li>
+          <li><a href="#" className="text-blue-100 hover:text-white transition duration-300 ease-in-out transform hover:scale-105">Logs</a></li>
+          <li><a href="#" className="text-blue-100 hover:text-white transition duration-300 ease-in-out transform hover:scale-105">Settings</a></li>
         </ul>
       </nav>
     </div>
@@ -31,10 +31,10 @@ const Header = () => (
 
 // Job Controls Component (Simplified)
 const JobControls = ({ onAddJob }) => (
-  <div className="flex flex-wrap gap-4 p-4 bg-white rounded-lg shadow-md mb-6 justify-end">
+  <div className="flex flex-wrap gap-4 p-5 bg-white rounded-xl shadow-xl mb-6 justify-end border border-gray-100">
     <button
       onClick={onAddJob}
-      className="flex items-center px-6 py-3 bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-600 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      className="flex items-center px-7 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-full shadow-lg hover:shadow-xl hover:from-purple-700 hover:to-indigo-700 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-300"
     >
       <PlusCircle className="mr-2" size={20} /> Add New Job
     </button>
@@ -43,23 +43,23 @@ const JobControls = ({ onAddJob }) => (
 
 // Job Filter and Search Component
 const JobFilterSearch = ({ onFilterChange, onSearchChange, searchTerm, selectedStatus }) => (
-  <div className="flex flex-wrap gap-4 p-4 bg-white rounded-lg shadow-md mb-6 items-center">
+  <div className="flex flex-wrap gap-4 p-5 bg-white rounded-xl shadow-xl mb-6 items-center border border-gray-100">
     <div className="relative flex-grow min-w-[200px]">
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+      <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
       <input
         type="text"
         placeholder="Search job by name..."
         value={searchTerm}
         onChange={(e) => onSearchChange(e.target.value)}
-        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="w-full pl-12 pr-5 py-3 border border-gray-200 rounded-full focus:outline-none focus:ring-3 focus:ring-blue-400 text-gray-700 placeholder-gray-400 shadow-sm"
       />
     </div>
     <div className="relative flex-grow min-w-[150px]">
-      <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+      <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
       <select
         value={selectedStatus}
         onChange={(e) => onFilterChange(e.target.value)}
-        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="w-full pl-12 pr-5 py-3 border border-gray-200 rounded-full appearance-none bg-white focus:outline-none focus:ring-3 focus:ring-blue-400 text-gray-700 shadow-sm"
       >
         <option value="All">All Statuses</option>
         <option value="Running">Running</option>
@@ -67,94 +67,98 @@ const JobFilterSearch = ({ onFilterChange, onSearchChange, searchTerm, selectedS
         <option value="Completed">Completed</option>
         <option value="Failed">Failed</option>
         <option value="Held">Held</option>
-        <option value="On Ice">On Ice</option> {/* Added On Ice status */}
+        <option value="On Ice">On Ice</option>
       </select>
-      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-700">
+        <svg className="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
       </div>
     </div>
   </div>
 );
 
 // Job List Component
-// Now includes per-job action buttons
 const JobList = ({ jobs, onForceStart, onHold, onOffHold, onKill, onOnIce }) => {
   const getStatusColor = (status) => {
     switch (status) {
-      case 'Running': return 'bg-green-100 text-green-800';
-      case 'Pending': return 'bg-yellow-100 text-yellow-800';
-      case 'Completed': return 'bg-blue-100 text-blue-800';
-      case 'Failed': return 'bg-red-100 text-red-800';
-      case 'Held': return 'bg-gray-100 text-gray-800';
-      case 'On Ice': return 'bg-blue-100 text-blue-800'; // Color for On Ice
-      default: return 'bg-gray-100 text-gray-800';
+      case 'Running': return 'bg-green-200 text-green-900';
+      case 'Pending': return 'bg-yellow-200 text-yellow-900';
+      case 'Completed': return 'bg-blue-200 text-blue-900';
+      case 'Failed': return 'bg-red-200 text-red-900';
+      case 'Held': return 'bg-gray-200 text-gray-900';
+      case 'On Ice': return 'bg-blue-200 text-blue-900';
+      default: return 'bg-gray-200 text-gray-900';
     }
   };
 
   if (jobs.length === 0) {
     return (
-      <div className="bg-white p-6 rounded-lg shadow-md text-center text-gray-600">
+      <div className="bg-white p-8 rounded-xl shadow-xl text-center text-gray-600 border border-gray-100">
         No jobs found matching your criteria.
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Job Name</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Run</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Next Run</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Job Name</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Last Run</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Next Run</th>
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {jobs.map((job) => (
-              <tr key={job.id} className="hover:bg-gray-50 transition duration-150">
+          <tbody className="bg-white divide-y divide-gray-100">
+            {jobs.map((job, index) => (
+              <tr key={job.id} className={`hover:bg-gray-50 transition duration-150 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{job.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(job.status)}`}>
+                  <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(job.status)}`}>
                     {job.status}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{job.lastRun}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{job.nextRun}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{job.lastRun}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{job.nextRun}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex items-center space-x-2">
                   <button
                     onClick={() => onForceStart(job.id)}
-                    className="text-green-600 hover:text-green-900 transition duration-150 transform hover:scale-110"
+                    disabled={job.status === 'Running'}
+                    className={`p-2 rounded-full transition duration-200 transform hover:scale-110 ${job.status === 'Running' ? 'text-gray-400 cursor-not-allowed bg-gray-100' : 'text-green-600 hover:bg-green-50 hover:text-green-800'}`}
                     title="Force Start"
                   >
                     <Play size={18} />
                   </button>
                   <button
                     onClick={() => onOnIce(job.id)}
-                    className="text-blue-600 hover:text-blue-900 transition duration-150 transform hover:scale-110"
+                    disabled={job.status === 'Running' || job.status === 'On Ice'}
+                    className={`p-2 rounded-full transition duration-200 transform hover:scale-110 ${job.status === 'Running' || job.status === 'On Ice' ? 'text-gray-400 cursor-not-allowed bg-gray-100' : 'text-blue-600 hover:bg-blue-50 hover:text-blue-800'}`}
                     title="On Ice"
                   >
                     <Snowflake size={18} />
                   </button>
                   <button
                     onClick={() => onHold(job.id)}
-                    className="text-yellow-600 hover:text-yellow-900 transition duration-150 transform hover:scale-110"
+                    disabled={job.status === 'Held'}
+                    className={`p-2 rounded-full transition duration-200 transform hover:scale-110 ${job.status === 'Held' ? 'text-gray-400 cursor-not-allowed bg-gray-100' : 'text-yellow-600 hover:bg-yellow-50 hover:text-yellow-800'}`}
                     title="On Hold"
                   >
                     <Pause size={18} />
                   </button>
                   <button
                     onClick={() => onOffHold(job.id)}
-                    className="text-indigo-600 hover:text-indigo-900 transition duration-150 transform hover:scale-110"
+                    disabled={job.status !== 'Held' && job.status !== 'On Ice'} // Only off hold if currently held or on ice
+                    className={`p-2 rounded-full transition duration-200 transform hover:scale-110 ${job.status !== 'Held' && job.status !== 'On Ice' ? 'text-gray-400 cursor-not-allowed bg-gray-100' : 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-800'}`}
                     title="Off Hold"
                   >
                     <RefreshCw size={18} />
                   </button>
                   <button
                     onClick={() => onKill(job.id)}
-                    className="text-red-600 hover:text-red-900 transition duration-150 transform hover:scale-110"
+                    disabled={job.status === 'Completed' || job.status === 'Failed'}
+                    className={`p-2 rounded-full transition duration-200 transform hover:scale-110 ${job.status === 'Completed' || job.status === 'Failed' ? 'text-gray-400 cursor-not-allowed bg-gray-100' : 'text-red-600 hover:bg-red-50 hover:text-red-800'}`}
                     title="Kill"
                   >
                     <XCircle size={18} />
@@ -176,9 +180,6 @@ const JobModal = ({ isOpen, onClose, onSave, job }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    // This modal is now primarily for adding new jobs.
-    // If 'job' is provided, it means we are in an edit context (which is not
-    // directly triggered from the table anymore, but the logic is kept for flexibility).
     if (job) {
       setJobName(job.name);
       setJobDefinition(job.definition);
@@ -186,7 +187,7 @@ const JobModal = ({ isOpen, onClose, onSave, job }) => {
       setJobName('');
       setJobDefinition('');
     }
-    setErrorMessage(''); // Clear error on open/job change
+    setErrorMessage('');
   }, [job, isOpen]);
 
   const handleSave = () => {
@@ -195,7 +196,6 @@ const JobModal = ({ isOpen, onClose, onSave, job }) => {
       return;
     }
     try {
-      // Attempt to parse the definition to ensure it's valid JSON
       JSON.parse(jobDefinition);
       onSave({ ...job, name: jobName, definition: jobDefinition });
       onClose();
@@ -207,9 +207,9 @@ const JobModal = ({ isOpen, onClose, onSave, job }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg transform transition-all sm:my-8 sm:w-full">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">{job ? 'Edit Job' : 'Add New Job'}</h2>
+    <div className="fixed inset-0 bg-gray-800 bg-opacity-60 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+      <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-lg transform transition-all duration-300 scale-100 opacity-100 border border-gray-200">
+        <h2 className="text-3xl font-bold mb-6 text-gray-800 text-center">{job ? 'Edit Job' : 'Add New Job'}</h2>
         <div className="mb-4">
           <label htmlFor="jobName" className="block text-gray-700 text-sm font-bold mb-2">Job Name:</label>
           <input
@@ -217,7 +217,8 @@ const JobModal = ({ isOpen, onClose, onSave, job }) => {
             id="jobName"
             value={jobName}
             onChange={(e) => setJobName(e.target.value)}
-            className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="shadow-sm appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="e.g., Daily Database Backup"
           />
         </div>
         <div className="mb-6">
@@ -227,23 +228,23 @@ const JobModal = ({ isOpen, onClose, onSave, job }) => {
             value={jobDefinition}
             onChange={(e) => setJobDefinition(e.target.value)}
             rows="10"
-            className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 font-mono text-sm"
+            className="shadow-sm appearance-none border border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
             placeholder='e.g., {"type": "report", "frequency": "daily"}'
           ></textarea>
-          {errorMessage && <p className="text-red-500 text-xs italic mt-2">{errorMessage}</p>}
+          {errorMessage && <p className="text-red-600 text-xs italic mt-2">{errorMessage}</p>}
         </div>
-        <div className="flex justify-end gap-3">
+        <div className="flex justify-end gap-4">
           <button
             onClick={onClose}
-            className="px-5 py-2 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-100 transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-300"
+            className="px-6 py-3 border border-gray-300 rounded-full text-gray-700 bg-gray-50 hover:bg-gray-100 transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-300 shadow-sm"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
-            className="flex items-center px-5 py-2 bg-blue-600 text-white rounded-full shadow-md hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-full shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-cyan-700 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300"
           >
-            Save
+            Save Job
           </button>
         </div>
       </div>
@@ -297,8 +298,9 @@ const App = () => {
     const job = jobs.find(j => j.id === jobId);
     if (job) {
       alert(`Taking job off hold: ${job.name}`);
-      // Decide what status it should go to after being off hold (e.g., Pending or Running if it was held while running)
-      updateJobStatus(jobId, 'Pending'); // Default to Pending for demonstration
+      // If a job is taken off hold, it typically goes back to pending or running based on its previous state.
+      // For simplicity, setting to 'Pending' here.
+      updateJobStatus(jobId, 'Pending');
     }
   };
 
@@ -306,7 +308,7 @@ const App = () => {
     const job = jobs.find(j => j.id === jobId);
     if (job) {
       alert(`Killing job: ${job.name}`);
-      updateJobStatus(jobId, 'Failed'); // Or 'Killed'
+      updateJobStatus(jobId, 'Failed');
     }
   };
 
@@ -319,22 +321,20 @@ const App = () => {
   };
 
   const handleAddJob = () => {
-    setCurrentJob(null); // Clear current job for new entry
+    setCurrentJob(null);
     setIsModalOpen(true);
   };
 
   const handleSaveJob = (updatedJob) => {
     if (updatedJob.id) {
-      // This path is less likely now, but kept for robustness if editing is re-introduced
       setJobs(jobs.map(job =>
         job.id === updatedJob.id ? { ...job, name: updatedJob.name, definition: updatedJob.definition } : job
       ));
     } else {
-      // Add new job
       const newJob = {
         ...updatedJob,
-        id: `job-${Date.now()}`, // Simple unique ID
-        status: 'Pending', // New jobs start as pending
+        id: `job-${Date.now()}`,
+        status: 'Pending',
         lastRun: 'N/A',
         nextRun: 'Scheduled',
       };
@@ -344,12 +344,15 @@ const App = () => {
 
 
   return (
-    <div className="min-h-screen bg-gray-100 font-sans text-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 font-sans text-gray-800">
       <style>
         {`
           @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
           body {
             font-family: 'Inter', sans-serif;
+          }
+          .text-shadow-lg {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
           }
         `}
       </style>
